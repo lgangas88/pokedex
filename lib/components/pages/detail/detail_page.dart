@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/components/pages/detail/detail_bloc.dart';
+import 'package:pokedex/components/pages/search_page/search_bloc.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:provider/provider.dart';
 
@@ -247,7 +248,7 @@ class _PreviousNextPokemon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        Container(
           child: (pokemon?.id ?? 0) - 1 != 0
               ? TextButton.icon(
                   onPressed: () async {
@@ -264,8 +265,9 @@ class _PreviousNextPokemon extends StatelessWidget {
                 )
               : const SizedBox(),
         ),
-        Expanded(
-          child: (pokemon?.id ?? 0) - 1 != 0
+        const Spacer(),
+        Container(
+          child: (pokemon?.id ?? 0) + 1 != context.read<SearchBloc>().count
               ? TextButton.icon(
                   onPressed: () async {
                     final prevPokemon = await context
