@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/components/pages/favorite/favorite_page.dart';
 import 'package:pokedex/components/pages/home/home_bloc.dart';
 import 'package:pokedex/components/pages/search_page/search_page.dart';
 import 'package:provider/provider.dart';
@@ -22,13 +23,10 @@ class _HomePageState extends State<HomePage> {
       
       body: PageView(
         controller: homeBloc.pageController,
+        onPageChanged: homeBloc.changePage,
         children: [
-          // Container(color: Colors.red,),
-          // Container(color: Colors.blue,),
-          // Container(color: Colors.green,),
-          Container(),
+          FavoritePage(),
           SearchPage(),
-          Container(),
         ],
       ),
       bottomNavigationBar: _BottonNavigationBar(),
@@ -50,10 +48,6 @@ class _BottonNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.military_tech),
           label: '',
         ),
       ],

@@ -1,6 +1,6 @@
 class Type {
   final String? name;
-  String? get assetImage => 'images/types/$name.png';
+  String? get assetImage => 'assets/images/types/$name.png';
 
   int? get mainColor => _typeColor[name];
 

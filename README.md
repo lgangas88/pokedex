@@ -1,16 +1,34 @@
-# pokedex
 
-A new Flutter project.
+# Pokedex
 
-## Getting Started
+Pokedex is an app made with Flutter using the PokeApi (https://pokeapi.co/). You can look for your favorite pokemons and create a team. Watch some details and take some photos with your pokemons.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Deployment
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To run this project you need to have Flutter. Follow the instructions according your OS in https://docs.flutter.dev/get-started/install.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+If all the settings are done, run.
+
+```bash
+  git clone https://github.com/lgangas88/pokedex.git
+```
+
+Once you get the project, we need to check if we have the right tools to run it.
+
+```bash
+  flutter doctor
+```
+
+If everything is correct then install all the dependencies.
+
+```bash
+  flutter pub get
+```
+
+To run the app.
+
+```bash
+  flutter run <your-device>
+```
+

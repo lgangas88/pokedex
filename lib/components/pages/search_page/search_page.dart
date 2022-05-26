@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pokedex/components/pages/search_page/search_bloc.dart';
-import 'package:pokedex/components/widgets/search_bar.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:provider/provider.dart';
 
@@ -11,18 +10,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  late final SearchBloc searchBloc;
   @override
   void initState() {
     super.initState();
+    searchBloc = context.read<SearchBloc>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final height = MediaQuery.of(context).size.height;
-      context.read<SearchBloc>().init(height);
+      searchBloc.init(height);
     });
   }
 
   @override
   void dispose() {
-    context.read<SearchBloc>().disposeScrollListener();
+    searchBloc.disposeScrollListener();
     super.dispose();
   }
 
@@ -34,7 +35,6 @@ class _SearchPageState extends State<SearchPage> {
       appBar: _appBar(),
       body: Column(
         children: [
-          const SearchBar(),
           Expanded(
             child: pokemonList != null
                 ? ListView.builder(
@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
 
   AppBar _appBar() => AppBar(
         title: Image.asset(
-          'images/logo.png',
+          'assets/images/logo.png',
           width: 120,
         ),
         centerTitle: true,
@@ -107,6 +107,7 @@ class _PokemonItem extends StatelessWidget {
 }
 
 class _SearchPokemonDelegate extends SearchDelegate {
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [

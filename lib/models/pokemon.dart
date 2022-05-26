@@ -13,6 +13,8 @@ class Pokemon {
 
   List<String>? abilities;
 
+  bool isFavorite = false;
+
   String? getPreviousPokemonImageUrl() {
     final previous = id! - 1;
     return previous != 0
@@ -27,6 +29,9 @@ class Pokemon {
         : null;
   }
 
+  dynamic mapped;
+
+
   Pokemon({
     this.name,
     this.url,
@@ -36,6 +41,7 @@ class Pokemon {
     this.height,
     this.weight,
     this.order,
+    this.mapped,
   });
 
   factory Pokemon.fromJson(dynamic data) {
@@ -58,6 +64,7 @@ class Pokemon {
       weight: data['weight'],
       height: data['height'],
       order: data['order'],
+      mapped: data,
     );
   }
 }

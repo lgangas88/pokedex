@@ -13,38 +13,56 @@ class DetailPage extends StatelessWidget {
     final detailBloc = context.watch<DetailBloc>();
 
     return Scaffold(
-      body: FutureBuilder<Pokemon?>(
-          future: detailBloc.getPokemon(pokemon.name!),
-          builder: (context, AsyncSnapshot<Pokemon?> snapshot) {
-            return Column(
-              children: [
-                Flexible(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    final circleRadius = constraints.maxHeight;
-                    return Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
+      body: SafeArea(
+        child: FutureBuilder<Pokemon?>(
+            future: detailBloc.getPokemon(pokemon.name!),
+            builder: (context, AsyncSnapshot<Pokemon?> snapshot) {
+              return Column(
+                children: [
+                  Flexible(
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      final circleRadius = constraints.maxHeight;
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          _typeCircle(snapshot.data, circleRadius),
+                          _pokemonHero(pokemon, context),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_left_rounded),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
                           ),
-                        ),
-                        _typeCircle(snapshot.data, circleRadius),
-                        _pokemonHero(pokemon, context),
-                      ],
-                    );
-                  }),
-                ),
-                Flexible(
-                  child: _InfoPokemon(pokemon: snapshot.data),
-                ),
-              ],
-            );
-          }),
+                          if (snapshot.hasData)
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: IconButton(
+                                icon: Icon(snapshot.data!.isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border),
+                                color: Colors.red,
+                                onPressed: () async {
+                                  final textToShow = await detailBloc
+                                      .saveOrRemovePokemon(snapshot.data!);
+                                  print(textToShow);
+                                },
+                              ),
+                            ),
+                        ],
+                      );
+                    }),
+                  ),
+                  Flexible(
+                    child: _InfoPokemon(pokemon: snapshot.data),
+                  ),
+                ],
+              );
+            }),
+      ),
     );
   }
 
@@ -99,7 +117,7 @@ class DetailPage extends StatelessWidget {
             : null,
         child: pokemon != null
             ? Align(
-                alignment: Alignment.bottomLeft,
+                alignment: Alignment.bottomCenter,
                 child: Wrap(
                   direction: Axis.vertical,
                   spacing: 8,
